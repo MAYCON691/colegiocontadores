@@ -4,24 +4,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FaArrowRight, FaPlayCircle } from "react-icons/fa";
+import BuildingModel from "@/components/BuildingModel";
 
-const slides = [
-  {
-    image: "/IMAGEN_1.jpg",
-    title: "Colegio de\nContadores\nLa Paz",
-    text: "Institución comprometida con la ética profesional, la representación gremial y el fortalecimiento permanente del ejercicio contable en el departamento de La Paz.",
-  },
-  {
-    image: "/IMAGEN_2.jpg",
-    title: "Formación\ninstitucional\ncontinua",
-    text: "Impulsamos capacitación, actualización técnica y espacios de crecimiento para consolidar una comunidad profesional moderna, sólida y preparada.",
-  },
-  {
-    image: "/IMAGEN_3.jpg",
-    title: "Prestigio,\ntrayectoria y\nconfianza",
-    text: "Una presencia digital moderna debe comunicar orden, seriedad y cercanía institucional, proyectando el valor real del Colegio hacia sus asociados y visitantes.",
-  },
-];
+const slides = ["/IMAGEN_1.jpg", "/IMAGEN_2.jpg", "/IMAGEN_3.jpg"];
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
@@ -34,59 +19,62 @@ export default function Hero() {
     return () => clearInterval(timer);
   }, []);
 
-  const current = slides[index];
-
   return (
     <section
       id="inicio"
-      className="relative min-h-screen overflow-hidden pt-[132px] md:pt-[140px]"
+      className="relative min-h-[760px] overflow-hidden pt-[140px] sm:pt-[150px] md:min-h-[720px] md:pt-[165px] xl:pt-[175px]"
     >
-      {/* Efectos decorativos */}
-      <div className="hero-ornament red left-[-100px] top-[180px] h-[240px] w-[240px]" />
-      <div className="hero-ornament green bottom-[60px] right-[-120px] h-[280px] w-[280px]" />
-
-      {/* Slide de fondo */}
       <AnimatePresence mode="wait">
         <motion.div
-          key={current.image}
-          initial={{ opacity: 0, scale: 1.06 }}
+          key={slides[index]}
+          initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 1.02 }}
-          transition={{ duration: 1.15, ease: "easeOut" }}
+          transition={{ duration: 1.1, ease: "easeOut" }}
           className="absolute inset-0"
         >
           <div
-            className="h-full w-full bg-cover bg-center"
-            style={{ backgroundImage: `url('${current.image}')` }}
+            className="h-full w-full scale-[1.03] bg-cover bg-center brightness-[0.95] contrast-[1.08] saturate-[1.08]"
+            style={{ backgroundImage: `url('${slides[index]}')` }}
           />
         </motion.div>
       </AnimatePresence>
 
-      <div className="hero-overlay absolute inset-0" />
-      <div className="bg-grid absolute inset-0 opacity-30" />
+      <div className="absolute inset-0 bg-black/35" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/35 to-black/20" />
+      <div className="bg-grid absolute inset-0 opacity-10" />
 
-      <div className="section-container relative z-10 grid min-h-[calc(100vh-140px)] items-center gap-12 py-10 lg:grid-cols-[1.02fr_0.98fr]">
-        {/* Columna izquierda */}
+      <div className="section-container relative z-10 grid min-h-[600px] items-center gap-8 py-10 md:min-h-[540px] lg:grid-cols-[1fr_0.82fr]">
         <motion.div
-          initial={{ opacity: 0, y: 42 }}
+          initial={{ opacity: 0, y: 34 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9 }}
-          className="max-w-3xl"
+          transition={{ duration: 0.85 }}
+          className="max-w-[620px]"
         >
-          <div className="mb-6 gold-line" />
+          <div className="mb-5 h-[3px] w-[110px] rounded-full bg-gradient-to-r from-[#b61b19] to-[#007636]" />
 
-          <div className="badge-small mb-5 glass-panel text-white">
-            excelencia profesional · ética · representación institucional
+          <div className="mb-5 inline-flex max-w-full rounded-full border border-white/20 bg-white/12 px-4 py-3 text-[10px] font-bold uppercase tracking-[0.16em] text-white backdrop-blur-md sm:text-xs">
+            Excelencia profesional · Ética · Representación institucional
           </div>
 
-          <h1 className="hero-title whitespace-pre-line">{current.title}</h1>
+          <h1 className="text-[3rem] font-black leading-[0.98] tracking-[-0.04em] text-white sm:text-[3.5rem] md:text-[4rem] xl:text-[4.2rem]">
+            Colegio de
+            <br />
+            Contadores
+            <br />
+            La Paz
+          </h1>
 
-          <p className="hero-subtitle mt-7 max-w-2xl">{current.text}</p>
+          <p className="mt-5 max-w-xl text-[1.05rem] leading-8 text-white/92 sm:text-lg">
+            Institución comprometida con la ética profesional, la representación
+            gremial y el fortalecimiento permanente del ejercicio contable en el
+            departamento de La Paz.
+          </p>
 
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
             <Link
               href="#institucional"
-              className="inline-flex items-center gap-2 rounded-full bg-[#b61b19] px-7 py-4 text-sm font-semibold text-white shadow-xl transition hover:-translate-y-1 hover:bg-[#991816]"
+              className="inline-flex w-fit items-center gap-2 rounded-full bg-[#b61b19] px-6 py-3 text-sm font-semibold text-white shadow-xl transition hover:-translate-y-1 hover:bg-[#991816]"
             >
               Ver área institucional
               <FaArrowRight />
@@ -94,22 +82,22 @@ export default function Hero() {
 
             <Link
               href="/tour360"
-              className="inline-flex items-center gap-2 rounded-full bg-[#007636] px-7 py-4 text-sm font-semibold text-white shadow-xl transition hover:-translate-y-1 hover:bg-[#005a29]"
+              className="inline-flex w-fit items-center gap-2 rounded-full bg-[#007636] px-6 py-3 text-sm font-semibold text-white shadow-xl transition hover:-translate-y-1 hover:bg-[#005a29]"
             >
               Explorar Tour 360
               <FaPlayCircle />
             </Link>
           </div>
 
-          <div className="mt-10 flex items-center gap-3">
+          <div className="mt-7 flex items-center gap-3">
             {slides.map((slide, slideIndex) => (
               <button
-                key={slide.image}
+                key={slide}
                 type="button"
                 onClick={() => setIndex(slideIndex)}
                 className={`h-3 rounded-full transition-all duration-300 ${
                   slideIndex === index
-                    ? "w-12 bg-white"
+                    ? "w-10 bg-white"
                     : "w-3 bg-white/45 hover:bg-white/70"
                 }`}
                 aria-label={`Ir al slide ${slideIndex + 1}`}
@@ -118,32 +106,14 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Columna derecha */}
         <motion.div
-          initial={{ opacity: 0, x: 80, rotate: 4 }}
-          animate={{ opacity: 1, x: 0, rotate: 0 }}
-          transition={{ duration: 1.05, delay: 0.12 }}
-          className="hidden lg:block"
+          initial={{ opacity: 0, x: 65 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.12 }}
+          className="hidden justify-center lg:flex xl:justify-end xl:pr-10"
         >
-          <div className="hero-slide-shadow relative ml-auto max-w-[520px] overflow-hidden rounded-[34px] border border-white/15 bg-white/12 p-4 backdrop-blur-md">
-            <div
-              className="h-[560px] rounded-[28px] bg-cover bg-center"
-              style={{ backgroundImage: "url('/IMAGEN_2.jpg')" }}
-            />
-
-            <div className="absolute left-6 top-6 rounded-full bg-white/88 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-slate-800">
-              Institución · Prestigio · Trayectoria
-            </div>
-
-            <div className="absolute bottom-6 left-6 right-6 rounded-[26px] bg-black/42 p-5 text-white backdrop-blur-md">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/75">
-                Colegio de Contadores La Paz
-              </p>
-              <p className="mt-2 text-lg font-bold">
-                Una presencia digital fuerte también comunica autoridad
-                institucional.
-              </p>
-            </div>
+          <div className="hero-slide-shadow w-full max-w-[390px] overflow-hidden rounded-[28px] border border-white/15 bg-white/12 p-3 backdrop-blur-md">
+            <BuildingModel />
           </div>
         </motion.div>
       </div>
