@@ -1,12 +1,14 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { ReactNode } from "react";
 
 type Props = {
   title: string;
   description: string;
+  children?: ReactNode;
 };
 
-export default function PageTemplate({ title, description }: Props) {
+export default function PageTemplate({ title, description, children }: Props) {
   return (
     <>
       <Navbar />
@@ -19,12 +21,16 @@ export default function PageTemplate({ title, description }: Props) {
 
           <p className="section-text mt-5 max-w-4xl">{description}</p>
 
-          <div className="mt-10 rounded-3xl bg-[#f8f6f1] p-6">
-            <p className="text-slate-600">
-              Esta sección está lista para agregar contenido institucional,
-              imágenes, documentos, enlaces o formularios según corresponda.
-            </p>
-          </div>
+          {children ? (
+            <div className="mt-10">{children}</div>
+          ) : (
+            <div className="mt-10 rounded-3xl bg-[#f8f6f1] p-6">
+              <p className="text-slate-600">
+                Esta sección está lista para agregar contenido institucional,
+                imágenes, documentos, enlaces o formularios según corresponda.
+              </p>
+            </div>
+          )}
         </section>
       </main>
 

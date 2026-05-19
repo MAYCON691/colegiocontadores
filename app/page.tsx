@@ -5,6 +5,7 @@ import InstitutionalSection from "@/components/InstitutionalSection";
 import NewsCards from "@/components/NewsCards";
 import ContactSection from "@/components/ContactSection";
 import MapSection from "@/components/MapSection";
+import ConveniosCarousel from "@/components/ConveniosCarousel";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
         <InstitutionalSection />
         <ContactSection />
         <MapSection />
+        <ConveniosCarousel />
       </main>
 
       <Footer />

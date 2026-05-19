@@ -418,3 +418,11 @@ button {
   background: linear-gradient(135deg, #009846, #005a29);
   transform: translateY(2px);
 }
+@keyframes scrollLogos {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}

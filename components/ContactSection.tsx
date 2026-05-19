@@ -2,158 +2,169 @@
 
 import { motion } from "framer-motion";
 import {
-  FaMapMarkerAlt,
-  FaPhoneAlt,
   FaEnvelope,
   FaFacebookF,
-  FaInstagram,
-  FaYoutube,
+  FaMapMarkerAlt,
+  FaPhoneAlt,
+  FaWhatsapp,
 } from "react-icons/fa";
 
 export default function ContactSection() {
   return (
-    <section id="contactenos" className="py-24">
-      <div className="section-container grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
-        {/* Columna de información */}
-        <motion.div
-          initial={{ opacity: 0, x: -70 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.85 }}
-          className="rounded-[30px] bg-white p-8 shadow-2xl soft-border"
-        >
-          <div className="mb-4 gold-line" />
-          <h2 className="section-title">Contáctenos</h2>
-          <p className="section-text mt-4">
-            Un sitio institucional moderno también debe facilitar la comunicación.
-            Aquí el visitante puede encontrar de forma rápida la dirección,
-            los teléfonos y el canal de contacto del Colegio.
-          </p>
-
-          <div className="mt-8 grid gap-5">
-            <div className="flex items-start gap-4 rounded-2xl bg-[#f8f6f1] p-5">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#b61b19] text-white">
-                <FaMapMarkerAlt />
-              </div>
-              <div>
-                <h3 className="font-bold text-slate-800">Dirección</h3>
-                <p className="mt-1 leading-7 text-slate-600">
-                  Calle Colombia N° 172, Edificio el Contador, Piso 4,
-                  Zona San Pedro, La Paz - Bolivia.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4 rounded-2xl bg-[#f8f6f1] p-5">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#007636] text-white">
-                <FaPhoneAlt />
-              </div>
-              <div>
-                <h3 className="font-bold text-slate-800">Teléfonos</h3>
-                <p className="mt-1 leading-7 text-slate-600">
-                  2337363 · 2337844 · 2313877 · +591 715 63068
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4 rounded-2xl bg-[#f8f6f1] p-5">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#b61b19] text-white">
-                <FaEnvelope />
-              </div>
-              <div>
-                <h3 className="font-bold text-slate-800">Correo</h3>
-                <p className="mt-1 leading-7 text-slate-600 break-all">
-                  colegio.contadores.lapaz@cclapaz.org
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-8 flex items-center gap-3">
-            {/* Reemplaza por las redes reales cuando te las pasen */}
-            <a
-              href="https://www.facebook.com/"
-              target="_blank"
-              rel="noreferrer"
-              className="flex h-11 w-11 items-center justify-center rounded-full bg-[#007636] text-white transition hover:scale-110"
-              aria-label="Facebook"
-            >
-              <FaFacebookF />
-            </a>
-
-            <a
-              href="https://www.instagram.com/"
-              target="_blank"
-              rel="noreferrer"
-              className="flex h-11 w-11 items-center justify-center rounded-full bg-[#b61b19] text-white transition hover:scale-110"
-              aria-label="Instagram"
-            >
-              <FaInstagram />
-            </a>
-
-            <a
-              href="https://www.youtube.com/"
-              target="_blank"
-              rel="noreferrer"
-              className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-800 text-white transition hover:scale-110"
-              aria-label="YouTube"
-            >
-              <FaYoutube />
-            </a>
-          </div>
-        </motion.div>
-
-        {/* Columna de formulario */}
-        <motion.div
-          initial={{ opacity: 0, x: 70 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.9 }}
-          className="rounded-[30px] bg-white p-8 shadow-2xl soft-border"
-        >
-          <div className="mb-4 gold-line" />
-          <h3 className="text-3xl font-black text-slate-800">
-            Solicitar información
-          </h3>
-
-          <p className="mt-4 leading-7 text-slate-600">
-            Formulario de demostración listo para futura conexión con correo,
-            backend o servicio de contacto.
-          </p>
-
-          <form
-            className="mt-8 grid gap-5"
-            onSubmit={(e) => e.preventDefault()}
+    <section id="contacto" className="bg-[#f8f6f1] py-20 sm:py-24">
+      <div className="section-container">
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+          <motion.div
+            initial={{ opacity: 0, x: -35 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="relative overflow-hidden rounded-[34px] bg-white p-8 shadow-[0_22px_70px_rgba(15,23,42,0.13)] soft-border md:p-10"
           >
-            <div className="grid gap-5 md:grid-cols-2">
-              <input
-                type="text"
-                placeholder="Su nombre"
-                className="form-input"
-              />
-              <input
-                type="email"
-                placeholder="Su correo electrónico"
-                className="form-input"
-              />
+            <div className="absolute right-0 top-0 h-32 w-32 translate-x-12 -translate-y-12 rotate-45 bg-[#b61b19]/10" />
+            <div className="gold-line mb-5" />
+
+            <h2 className="section-title">Contáctenos</h2>
+
+            <p className="section-text mt-5">
+              Canales oficiales del Colegio de Contadores La Paz para atención
+              institucional, consultas y orientación a asociados.
+            </p>
+
+            <div className="mt-8 space-y-4">
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Calle+Colombia+172+La+Paz+Bolivia"
+                target="_blank"
+                className="flex gap-4 rounded-[24px] bg-[#f8f6f1] p-5 transition hover:-translate-y-1 hover:bg-white hover:shadow-xl"
+              >
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#b61b19] text-white">
+                  <FaMapMarkerAlt />
+                </span>
+                <div>
+                  <h3 className="font-black text-slate-950">Dirección</h3>
+                  <p className="mt-1 text-sm leading-6 text-slate-600">
+                    Calle Colombia N° 172, Edificio El Contador, Piso 4, Zona
+                    San Pedro, La Paz - Bolivia.
+                  </p>
+                </div>
+              </a>
+
+              <a
+                href="tel:+5912337363"
+                className="flex gap-4 rounded-[24px] bg-[#f8f6f1] p-5 transition hover:-translate-y-1 hover:bg-white hover:shadow-xl"
+              >
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#007636] text-white">
+                  <FaPhoneAlt />
+                </span>
+                <div>
+                  <h3 className="font-black text-slate-950">Teléfonos</h3>
+                  <p className="mt-1 text-sm leading-6 text-slate-600">
+                    2337363 · 2337844 · 2313877
+                  </p>
+                </div>
+              </a>
+
+              <a
+                href="https://wa.me/59171563068"
+                target="_blank"
+                className="flex gap-4 rounded-[24px] bg-[#f8f6f1] p-5 transition hover:-translate-y-1 hover:bg-white hover:shadow-xl"
+              >
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#007636] text-white">
+                  <FaWhatsapp />
+                </span>
+                <div>
+                  <h3 className="font-black text-slate-950">WhatsApp</h3>
+                  <p className="mt-1 text-sm leading-6 text-slate-600">
+                    +591 715 63068
+                  </p>
+                </div>
+              </a>
+
+              <a
+                href="mailto:colegio.contadores.lapaz@cclapaz.org"
+                className="flex gap-4 rounded-[24px] bg-[#f8f6f1] p-5 transition hover:-translate-y-1 hover:bg-white hover:shadow-xl"
+              >
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#b61b19] text-white">
+                  <FaEnvelope />
+                </span>
+                <div>
+                  <h3 className="font-black text-slate-950">Correo</h3>
+                  <p className="mt-1 break-all text-sm leading-6 text-slate-600">
+                    colegio.contadores.lapaz@cclapaz.org
+                  </p>
+                </div>
+              </a>
             </div>
 
-            <input type="text" placeholder="Asunto" className="form-input" />
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href="https://www.facebook.com/colegiodecontadoreslpz/?locale=es_LA"
+                target="_blank"
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-[#007636] text-white shadow-xl transition hover:-translate-y-1 hover:bg-[#b61b19]"
+              >
+                <FaFacebookF />
+              </a>
 
-            <textarea
-              placeholder="Escriba su mensaje"
-              rows={7}
-              className="form-input resize-none"
-            />
+              <a
+                href="https://wa.me/59171563068"
+                target="_blank"
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-[#007636] text-white shadow-xl transition hover:-translate-y-1 hover:bg-[#b61b19]"
+              >
+                <FaWhatsapp />
+              </a>
 
-            <button
-              type="submit"
-              className="w-fit rounded-full bg-[#b61b19] px-8 py-4 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-1 hover:bg-[#991816]"
-            >
-              Enviar mensaje
-            </button>
-          </form>
-        </motion.div>
+              <a
+                href="mailto:colegio.contadores.lapaz@cclapaz.org"
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-900 text-white shadow-xl transition hover:-translate-y-1 hover:bg-[#b61b19]"
+              >
+                <FaEnvelope />
+              </a>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 35 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="relative overflow-hidden rounded-[34px] bg-white p-8 shadow-[0_22px_70px_rgba(15,23,42,0.13)] soft-border md:p-10"
+          >
+            <div className="gold-line mb-5" />
+
+            <h2 className="text-3xl font-black tracking-tight text-slate-950 md:text-4xl">
+              Solicitar información
+            </h2>
+
+            <p className="mt-4 text-base leading-8 text-slate-600">
+              Para consultas institucionales, puede escribirnos directamente al
+              correo oficial del Colegio.
+            </p>
+
+            <form className="mt-8 grid gap-4">
+              <input
+                className="rounded-2xl border border-slate-200 px-5 py-4 outline-none transition focus:border-[#b61b19]"
+                placeholder="Su nombre"
+              />
+              <input
+                className="rounded-2xl border border-slate-200 px-5 py-4 outline-none transition focus:border-[#b61b19]"
+                placeholder="Su correo electrónico"
+              />
+              <input
+                className="rounded-2xl border border-slate-200 px-5 py-4 outline-none transition focus:border-[#b61b19]"
+                placeholder="Asunto"
+              />
+              <textarea
+                className="min-h-[170px] rounded-2xl border border-slate-200 px-5 py-4 outline-none transition focus:border-[#b61b19]"
+                placeholder="Escriba su mensaje"
+              />
+
+              <a
+                href="mailto:colegio.contadores.lapaz@cclapaz.org?subject=Consulta%20institucional%20CCLP"
+                className="mt-2 w-fit rounded-full bg-[#b61b19] px-7 py-4 text-xs font-black uppercase tracking-[0.18em] text-white shadow-xl transition hover:-translate-y-1 hover:bg-slate-950"
+              >
+                Enviar mensaje
+              </a>
+            </form>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

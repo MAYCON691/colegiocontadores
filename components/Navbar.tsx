@@ -19,13 +19,44 @@ import {
 } from "react-icons/fa";
 import { menuItems, quickLinks, type MenuItem } from "@/lib/menu";
 
-function DesktopMenuItem({ item }: { item: MenuItem }) {
+function isActiveItem(item: MenuItem, pathname: string): boolean {
+  const current = pathname.toLowerCase();
+
+  if (item.href) {
+    const href = item.href.toLowerCase();
+
+    if (href === "/") {
+      if (current === "/") return true;
+    } else if (current === href || current.startsWith(`${href}/`)) {
+      return true;
+    }
+  }
+
+  return item.children?.some((child) => isActiveItem(child, pathname)) ?? false;
+}
+
+function DesktopMenuItem({
+  item,
+  pathname,
+}: {
+  item: MenuItem;
+  pathname: string;
+}) {
   const [open, setOpen] = useState(false);
+  const active = isActiveItem(item, pathname);
 
   if (!item.children) {
     return (
-      <Link href={item.href ?? "#"} className="menu-link whitespace-nowrap text-[14px]">
+      <Link
+        href={item.href ?? "#"}
+        className={`menu-link relative whitespace-nowrap text-[14px] ${
+          active ? "!text-[#b61b19]" : ""
+        }`}
+      >
         {item.label}
+        {active && (
+          <span className="absolute -bottom-2 left-0 right-0 h-[3px] rounded-full bg-[#b61b19]" />
+        )}
       </Link>
     );
   }
@@ -38,10 +69,15 @@ function DesktopMenuItem({ item }: { item: MenuItem }) {
     >
       <Link
         href={item.href ?? "#"}
-        className="menu-link inline-flex items-center gap-2 whitespace-nowrap text-[14px]"
+        className={`menu-link relative inline-flex items-center gap-2 whitespace-nowrap text-[14px] ${
+          active ? "!text-[#b61b19]" : ""
+        }`}
       >
         {item.label}
         <FaChevronDown className="text-[10px]" />
+        {active && (
+          <span className="absolute -bottom-2 left-0 right-0 h-[3px] rounded-full bg-[#b61b19]" />
+        )}
       </Link>
 
       <AnimatePresence>
@@ -53,35 +89,51 @@ function DesktopMenuItem({ item }: { item: MenuItem }) {
             transition={{ duration: 0.16 }}
             className="absolute left-0 top-full z-[999] min-w-[250px] rounded-2xl border border-slate-100 bg-white p-3 shadow-[0_25px_70px_rgba(15,23,42,0.18)]"
           >
-            {item.children.map((child) => (
-              <div key={child.label} className="group relative">
-                <Link
-                  href={child.href ?? "#"}
-                  className="flex items-center justify-between rounded-xl px-4 py-3 text-[15px] font-semibold text-slate-700 transition hover:bg-[#f8f6f1] hover:text-[#b61b19]"
-                >
-                  {child.label}
-                  {child.children && <FaChevronRight className="text-xs" />}
-                </Link>
+            {item.children.map((child) => {
+              const childActive = isActiveItem(child, pathname);
 
-                {child.children && (
-                  <>
-                    <div className="absolute left-full top-0 h-full w-4" />
+              return (
+                <div key={child.label} className="group relative">
+                  <Link
+                    href={child.href ?? "#"}
+                    className={`flex items-center justify-between rounded-xl px-4 py-3 text-[15px] font-semibold transition hover:bg-[#f8f6f1] hover:text-[#b61b19] ${
+                      childActive
+                        ? "bg-[#fff2f2] text-[#b61b19]"
+                        : "text-slate-700"
+                    }`}
+                  >
+                    {child.label}
+                    {child.children && <FaChevronRight className="text-xs" />}
+                  </Link>
 
-                    <div className="invisible absolute left-[calc(100%+8px)] top-0 min-w-[250px] rounded-2xl border border-slate-100 bg-white p-3 opacity-0 shadow-[0_25px_70px_rgba(15,23,42,0.18)] transition group-hover:visible group-hover:opacity-100">
-                      {child.children.map((sub) => (
-                        <Link
-                          key={sub.label}
-                          href={sub.href ?? "#"}
-                          className="block rounded-xl px-4 py-3 text-[15px] font-semibold text-slate-700 transition hover:bg-[#f8f6f1] hover:text-[#007636]"
-                        >
-                          {sub.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </>
-                )}
-              </div>
-            ))}
+                  {child.children && (
+                    <>
+                      <div className="absolute left-full top-0 h-full w-4" />
+
+                      <div className="invisible absolute left-[calc(100%+8px)] top-0 min-w-[250px] rounded-2xl border border-slate-100 bg-white p-3 opacity-0 shadow-[0_25px_70px_rgba(15,23,42,0.18)] transition group-hover:visible group-hover:opacity-100">
+                        {child.children.map((sub) => {
+                          const subActive = isActiveItem(sub, pathname);
+
+                          return (
+                            <Link
+                              key={sub.label}
+                              href={sub.href ?? "#"}
+                              className={`block rounded-xl px-4 py-3 text-[15px] font-semibold transition hover:bg-[#f8f6f1] hover:text-[#007636] ${
+                                subActive
+                                  ? "bg-[#fff2f2] text-[#b61b19]"
+                                  : "text-slate-700"
+                              }`}
+                            >
+                              {sub.label}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </>
+                  )}
+                </div>
+              );
+            })}
           </motion.div>
         )}
       </AnimatePresence>
@@ -92,18 +144,23 @@ function DesktopMenuItem({ item }: { item: MenuItem }) {
 function MobileMenuItem({
   item,
   closeMenu,
+  pathname,
 }: {
   item: MenuItem;
   closeMenu: () => void;
+  pathname: string;
 }) {
   const [open, setOpen] = useState(false);
+  const active = isActiveItem(item, pathname);
 
   if (!item.children) {
     return (
       <Link
         href={item.href ?? "#"}
         onClick={closeMenu}
-        className="rounded-xl px-4 py-3 text-base font-bold text-slate-700 hover:bg-slate-100"
+        className={`rounded-xl px-4 py-3 text-base font-bold hover:bg-slate-100 ${
+          active ? "bg-[#fff2f2] text-[#b61b19]" : "text-slate-700"
+        }`}
       >
         {item.label}
       </Link>
@@ -115,10 +172,14 @@ function MobileMenuItem({
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-left text-base font-bold text-slate-800 hover:bg-slate-100"
+        className={`flex w-full items-center justify-between rounded-xl px-4 py-3 text-left text-base font-bold hover:bg-slate-100 ${
+          active ? "text-[#b61b19]" : "text-slate-800"
+        }`}
       >
         {item.label}
-        <FaChevronDown className={`text-xs transition ${open ? "rotate-180" : ""}`} />
+        <FaChevronDown
+          className={`text-xs transition ${open ? "rotate-180" : ""}`}
+        />
       </button>
 
       <AnimatePresence>
@@ -139,32 +200,44 @@ function MobileMenuItem({
               </Link>
             )}
 
-            {item.children.map((child) => (
-              <div key={child.label}>
-                <Link
-                  href={child.href ?? "#"}
-                  onClick={closeMenu}
-                  className="block rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-white"
-                >
-                  {child.label}
-                </Link>
+            {item.children.map((child) => {
+              const childActive = isActiveItem(child, pathname);
 
-                {child.children && (
-                  <div className="ml-4 border-l border-slate-200 pl-3">
-                    {child.children.map((sub) => (
-                      <Link
-                        key={sub.label}
-                        href={sub.href ?? "#"}
-                        onClick={closeMenu}
-                        className="block rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-white hover:text-[#007636]"
-                      >
-                        {sub.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+              return (
+                <div key={child.label}>
+                  <Link
+                    href={child.href ?? "#"}
+                    onClick={closeMenu}
+                    className={`block rounded-xl px-4 py-3 text-sm font-semibold hover:bg-white ${
+                      childActive ? "text-[#b61b19]" : "text-slate-700"
+                    }`}
+                  >
+                    {child.label}
+                  </Link>
+
+                  {child.children && (
+                    <div className="ml-4 border-l border-slate-200 pl-3">
+                      {child.children.map((sub) => {
+                        const subActive = isActiveItem(sub, pathname);
+
+                        return (
+                          <Link
+                            key={sub.label}
+                            href={sub.href ?? "#"}
+                            onClick={closeMenu}
+                            className={`block rounded-xl px-4 py-2 text-sm font-semibold hover:bg-white hover:text-[#007636] ${
+                              subActive ? "text-[#b61b19]" : "text-slate-600"
+                            }`}
+                          >
+                            {sub.label}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </motion.div>
         )}
       </AnimatePresence>
@@ -182,13 +255,31 @@ export default function Navbar() {
     <header className="fixed left-0 top-0 z-50 w-full">
       <div className="h-[32px] bg-[linear-gradient(90deg,#6f0d0b_0%,#b61b19_30%,#cf8f8f_50%,#b61b19_70%,#6f0d0b_100%)] md:h-[34px]">
         <div className="section-container flex h-full items-center justify-end gap-2 md:gap-3">
-          <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" className="social-glass" aria-label="Facebook">
+          <a
+            href="https://www.facebook.com/colegiodecontadoreslpz/?locale=es_LA"
+            target="_blank"
+            rel="noreferrer"
+            className="social-glass"
+            aria-label="Facebook"
+          >
             <FaFacebookF />
           </a>
-          <a href="https://wa.me/59171563068" target="_blank" rel="noreferrer" className="social-glass" aria-label="WhatsApp">
+          <a
+            href="https://wa.me/59171563068"
+            target="_blank"
+            rel="noreferrer"
+            className="social-glass"
+            aria-label="WhatsApp"
+          >
             <FaWhatsapp />
           </a>
-          <a href="https://www.youtube.com/" target="_blank" rel="noreferrer" className="social-glass" aria-label="YouTube">
+          <a
+            href="https://www.youtube.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="social-glass"
+            aria-label="YouTube"
+          >
             <FaYoutube />
           </a>
         </div>
@@ -222,7 +313,11 @@ export default function Navbar() {
 
           <nav className="hidden items-center gap-5 font-semibold text-slate-700 xl:flex">
             {menuItems.map((item) => (
-              <DesktopMenuItem key={item.label} item={item} />
+              <DesktopMenuItem
+                key={item.label}
+                item={item}
+                pathname={pathname}
+              />
             ))}
           </nav>
 
@@ -239,15 +334,30 @@ export default function Navbar() {
         {showQuickLinks && (
           <div className="hidden bg-transparent xl:block">
             <div className="section-container flex justify-center gap-5">
-              <a href={quickLinks[0].href} target="_blank" rel="noreferrer" className="quick-menu-button">
+              <a
+                href={quickLinks[0].href}
+                target="_blank"
+                rel="noreferrer"
+                className="quick-menu-button"
+              >
                 <FaUsers />
                 {quickLinks[0].label}
               </a>
-              <a href={quickLinks[1].href} target="_blank" rel="noreferrer" className="quick-menu-button">
+              <a
+                href={quickLinks[1].href}
+                target="_blank"
+                rel="noreferrer"
+                className="quick-menu-button"
+              >
                 <FaCheckCircle />
                 {quickLinks[1].label}
               </a>
-              <a href={quickLinks[2].href} target="_blank" rel="noreferrer" className="quick-menu-button">
+              <a
+                href={quickLinks[2].href}
+                target="_blank"
+                rel="noreferrer"
+                className="quick-menu-button"
+              >
                 <FaIdCard />
                 {quickLinks[2].label}
               </a>
@@ -269,6 +379,7 @@ export default function Navbar() {
                   <MobileMenuItem
                     key={item.label}
                     item={item}
+                    pathname={pathname}
                     closeMenu={() => setOpen(false)}
                   />
                 ))}

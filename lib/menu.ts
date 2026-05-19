@@ -79,14 +79,14 @@ export const menuItems: MenuItem[] = [
 export const quickLinks = [
   {
     label: "Gestión de Asociados",
-    href: "https://siga.cclapaz.org/",
+    href: "http://siga.cclapaz.org/syscc/asociado",
   },
   {
     label: "Verificación de Solvencia",
-    href: "https://siga.cclapaz.org/",
+    href: "http://siga.cclapaz.org/syscc/buscar.php",
   },
   {
     label: "Consulta Asociado",
-    href: "https://siga.cclapaz.org/",
+    href: "http://siga.cclapaz.org/syscc/consulta.php",
   },
 ];
